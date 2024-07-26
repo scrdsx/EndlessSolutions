@@ -2,7 +2,7 @@ local License = "KEYAUTH-D12fac-I0l6j0-pTI31p-3m2bsj-ZHoUdA-aWx0LQ" --* Your Lic
 
 local HttpService = game:GetService("HttpService")
 local StarterGui = game:GetService("StarterGui")
-local LuaName = "KeyAuth Lua Example"
+local LuaName = "KeyAuth"
 
 StarterGui:SetCore("SendNotification", {
 	Title = LuaName,
