@@ -23,7 +23,7 @@ local function teleportToJobRig()
 
         local targetPart = jobRigModel.PrimaryPart or jobRigModel:FindFirstChild("HumanoidRootPart") or jobRigModel:FindFirstChildWhichIsA("BasePart")
         
-        -- Check if the target part exists
+
         if targetPart then
             -- Get the player's character
             local character = player.Character
