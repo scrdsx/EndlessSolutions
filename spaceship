@@ -9,7 +9,6 @@ local isRunning = false
 
 -- Function to trigger the action normally associated with pressing 'E'
 local function performEKeyAction()
-    print("Performing action associated with 'E' key.")
     -- Example: If 'E' triggers some function in your game, call that function here
     -- SomeFunctionTriggeredByE()
 end
