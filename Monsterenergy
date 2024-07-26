@@ -1,26 +1,26 @@
--- Get the LocalPlayer
+
 local player = game.Players.LocalPlayer
 
--- Get UserInputService
+
 local UserInputService = game:GetService("UserInputService")
 
--- Variable to control whether the teleportation and action are running
+
 local isRunning = false
 
--- Function to trigger the action normally associated with pressing 'E'
+
 local function performEKeyAction()
-    -- Example: If 'E' triggers some function in your game, call that function here
+
     -- SomeFunctionTriggeredByE()
 end
 
--- Function to teleport the player to the part named "JobRig"
+
 local function teleportToJobRig()
-    -- Find the model named "JobRig" in the workspace
+
     local jobRigModel = game.Workspace:FindFirstChild("JobRig")
     
-    -- Check if the model exists
+
     if jobRigModel and jobRigModel:IsA("Model") then
-        -- Find a primary part or a specific part in the model to teleport to
+
         local targetPart = jobRigModel.PrimaryPart or jobRigModel:FindFirstChild("HumanoidRootPart") or jobRigModel:FindFirstChildWhichIsA("BasePart")
         
         -- Check if the target part exists
@@ -28,36 +28,36 @@ local function teleportToJobRig()
             -- Get the player's character
             local character = player.Character
             
-            -- Check if the character exists
+
             if character then
-                -- Get the humanoid root part of the character
+
                 local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
                 
-                -- Check if the humanoid root part exists
+
                 if humanoidRootPart then
-                    -- Teleport the character to the target part's position
+
                     humanoidRootPart.CFrame = targetPart.CFrame
                     
-                    -- Wait for 2 seconds
+
                     wait(4)
                     
-                    -- Find and teleport to every part named "DeliveryPosition"
+
                     local deliveryPositions = {}
                     
-                    -- Collect all parts named "DeliveryPosition"
+
                     for _, part in pairs(game.Workspace:GetDescendants()) do
                         if part:IsA("BasePart") and part.Name == "DeliveryPosition" then
                             table.insert(deliveryPositions, part)
                         end
                     end
                     
-                    -- Teleport to each "DeliveryPosition" part
+
                     for _, pos in ipairs(deliveryPositions) do
                         humanoidRootPart.CFrame = pos.CFrame
                         wait(0.5) -- Optionally wait a bit between teleportations
                     end
                     
-                    -- Simulate holding down 'E' by calling the function
+
                     local startTime = tick()
                     local duration = 4  -- Duration to simulate 'E' key hold
                     
@@ -80,12 +80,12 @@ local function teleportToJobRig()
     end
 end
 
--- Function to toggle the running state
+
 local function toggleRunning()
     isRunning = not isRunning
 end
 
--- Key listener to toggle running with 'B'
+
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
     if input.KeyCode == Enum.KeyCode.B then
@@ -93,11 +93,10 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     end
 end)
 
--- Main loop to continuously perform the teleportation and action
+
 while true do
     if isRunning then
         teleportToJobRig()
     end
-    wait(2) -- Adjust this interval as needed (time to wait before repeating)
-    print("No Anti Cheat Detected ✔")
+    wait(2)
 end
