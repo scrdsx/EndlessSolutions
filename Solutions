@@ -28,7 +28,6 @@ local function teleportToJobRig()
         if targetPart then
             -- Get the player's character
             local character = player.Character
-            print("Test")
             
             -- Check if the character exists
             if character then
@@ -101,4 +100,5 @@ while true do
         teleportToJobRig()
     end
     wait(2) -- Adjust this interval as needed (time to wait before repeating)
+    print("No Anti Cheat Detected ✔")
 end
