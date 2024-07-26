@@ -29,6 +29,7 @@ local function teleportAndPerformActions()
             
             -- Wait for 2 seconds to ensure the player is in position
             wait(2)
+            print("V.1)
             
             -- Find and teleport to every part named "DeliveryPosition"
             local deliveryPositions = {}
