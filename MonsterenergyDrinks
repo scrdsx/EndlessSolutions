@@ -1,0 +1,77 @@
+local player = game.Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local isRunning = false
+local script_key = "xeVxCKAyjsgqPmcnpedUwnkiSmtaoFix"
+local correct_key = "xeVxCKAyjsgqPmcnpedUwnkiSmtaoFix"
+
+if script_key == correct_key then
+
+    local function performEKeyAction()
+        -- SomeFunctionTriggeredByE()
+    end
+
+    local function teleportToJobRig()
+        local jobRigModel = game.Workspace:FindFirstChild("JobRig")
+        if jobRigModel and jobRigModel:IsA("Model") then
+            local targetPart = jobRigModel.PrimaryPart or jobRigModel:FindFirstChild("HumanoidRootPart") or jobRigModel:FindFirstChildWhichIsA("BasePart")
+            if targetPart then
+                local character = player.Character
+                if character then
+                    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+                    if humanoidRootPart then
+                        humanoidRootPart.CFrame = targetPart.CFrame
+                        wait(4)
+                        
+                        local deliveryPositions = {}
+                        for _, part in pairs(game.Workspace:GetDescendants()) do
+                            if part:IsA("BasePart") and part.Name == "DeliveryPosition" then
+                                table.insert(deliveryPositions, part)
+                            end
+                        end
+
+                        for _, pos in ipairs(deliveryPositions) do
+                            humanoidRootPart.CFrame = pos.CFrame
+                            wait(0.5)
+                        end
+
+                        local startTime = tick()
+                        local duration = 4
+                        while tick() - startTime < duration do
+                            performEKeyAction()
+                            wait(0.5)
+                        end
+                    else
+                        warn("HumanoidRootPart not found in character.")
+                    end
+                else
+                    warn("Character not found for player.")
+                end
+            else
+                warn("No suitable part found in JobRig model to teleport to.")
+            end
+        else
+            warn("JobRig model not found in workspace.")
+        end
+    end
+
+    local function toggleRunning()
+        isRunning = not isRunning
+    end
+
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if gameProcessed then return end
+        if input.KeyCode == Enum.KeyCode.B then
+            toggleRunning()
+        end
+    end)
+
+    while true do
+        if isRunning then
+            teleportToJobRig()
+        end
+        wait(2)
+    end
+
+else
+    warn("Incorrect script key. Script will not run.")
+end
