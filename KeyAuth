@@ -1,4 +1,4 @@
-local License = "KEYAUTH-8d0dad-7uwBSh-aGamVu-XcxeyL-6UJtXH-J05sZs" --* Your License to use this script.
+local License = "KEYAUTH-D12fac-I0l6j0-pTI31p-3m2bsj-ZHoUdA-aWx0LQ" --* Your License to use this script.
 
 local HttpService = game:GetService("HttpService")
 local StarterGui = game:GetService("StarterGui")
