@@ -79,60 +79,26 @@ local player = game.Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
 
 local isRunning = false
-local isUIVisible = true
 
--- Create the UI elements
-local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-screenGui.Name = "TeleportGui"
-screenGui.ResetOnSpawn = false
+-- Function to update the checkbox (no longer used)
+-- local function updateCheckBox()
+--     if isRunning then
+--         checkBox.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple background
+--     else
+--         checkBox.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background
+--     end
+-- end
 
--- Main Frame
-local frame = Instance.new("Frame", screenGui)
-frame.Size = UDim2.new(0, 800, 0, 500) -- Increased size
-frame.Position = UDim2.new(0.5, -400, 0.5, -250) -- Centered
-frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-frame.BorderColor3 = Color3.fromRGB(128, 0, 128) -- Purple border
-frame.BorderSizePixel = 1 -- Thinner border
-frame.Active = true
-frame.Draggable = true
-
--- Beta text at the bottom
-local betaText = Instance.new("TextLabel", frame)
-betaText.Size = UDim2.new(0, 60, 0, 20)
-betaText.Position = UDim2.new(0, 10, 1, -30)
-betaText.BackgroundTransparency = 1
-betaText.Text = "Beta"
-betaText.TextColor3 = Color3.fromRGB(255, 255, 255)
-betaText.TextScaled = true
-betaText.Font = Enum.Font.Fantasy
-
--- Checkbox
-local checkBox = Instance.new("TextButton", frame)
-checkBox.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
-checkBox.Position = UDim2.new(0, 20, 0, 50)
-checkBox.BackgroundColor3 = Color3.new(0, 0, 0)
-checkBox.BorderColor3 = Color3.fromRGB(255, 255, 255)
-checkBox.BorderSizePixel = 2
-checkBox.Text = ""
-
-local function updateCheckBox()
-    if isRunning then
-        checkBox.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple background
-    else
-        checkBox.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background
-    end
-end
-
-checkBox.MouseButton1Click:Connect(function()
-    isRunning = not isRunning
-    updateCheckBox()
-end)
+-- Checkbox click handler (no longer used)
+-- checkBox.MouseButton1Click:Connect(function()
+--     isRunning = not isRunning
+--     updateCheckBox()
+-- end)
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
     if input.KeyCode == Enum.KeyCode.RightShift then
-        isUIVisible = not isUIVisible
-        frame.Visible = isUIVisible
+        isRunning = not isRunning
     end
 end)
 
@@ -173,7 +139,7 @@ local function teleportToJobRig()
                     end
                     
                     local startTime = tick()
-                    local duration = 4
+                    let duration = 4
                     
                     while tick() - startTime < duration do
                         performEKeyAction()
@@ -203,44 +169,3 @@ local function runTeleportLoop()
 end
 
 spawn(runTeleportLoop)
-
--- Tabs
-local tabFrame = Instance.new("Frame", frame)
-tabFrame.Size = UDim2.new(1, 0, 0, 50)
-tabFrame.Position = UDim2.new(0, 0, 0, 0)
-tabFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-tabFrame.BorderSizePixel = 0
-
-local tab1Button = Instance.new("TextButton", tabFrame)
-tab1Button.Size = UDim2.new(0, 100, 1, 0)
-tab1Button.Position = UDim2.new(0, 0, 0, 0)
-tab1Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-tab1Button.Text = "Tab 1"
-
-local tab2Button = Instance.new("TextButton", tabFrame)
-tab2Button.Size = UDim2.new(0, 100, 1, 0)
-tab2Button.Position = UDim2.new(0, 100, 0, 0)
-tab2Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-tab2Button.Text = "Tab 2"
-
-local tabContent1 = Instance.new("Frame", frame)
-tabContent1.Size = UDim2.new(1, 0, 1, -50)
-tabContent1.Position = UDim2.new(0, 0, 0, 50)
-tabContent1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-tabContent1.Visible = true
-
-local tabContent2 = Instance.new("Frame", frame)
-tabContent2.Size = UDim2.new(1, 0, 1, -50)
-tabContent2.Position = UDim2.new(0, 0, 0, 50)
-tabContent2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-tabContent2.Visible = false
-
-tab1Button.MouseButton1Click:Connect(function()
-    tabContent1.Visible = true
-    tabContent2.Visible = false
-end)
-
-tab2Button.MouseButton1Click:Connect(function()
-    tabContent1.Visible = false
-    tabContent2.Visible = true
-end)
