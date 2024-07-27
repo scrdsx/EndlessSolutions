@@ -86,12 +86,13 @@ local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 screenGui.Name = "TeleportGui"
 screenGui.ResetOnSpawn = false
 
+-- Main Frame
 local frame = Instance.new("Frame", screenGui)
-frame.Size = UDim2.new(0, 600, 0, 400)
-frame.Position = UDim2.new(0.5, -300, 0.5, -200)
+frame.Size = UDim2.new(0, 800, 0, 500) -- Increased size
+frame.Position = UDim2.new(0.5, -400, 0.5, -250) -- Centered
 frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
-frame.BorderSizePixel = 2
+frame.BorderColor3 = Color3.fromRGB(128, 0, 128) -- Purple border
+frame.BorderSizePixel = 1 -- Thinner border
 frame.Active = true
 frame.Draggable = true
 
@@ -107,25 +108,18 @@ betaText.Font = Enum.Font.Fantasy
 
 -- Checkbox
 local checkBox = Instance.new("TextButton", frame)
-checkBox.Size = UDim2.new(0, 40, 0, 40)
+checkBox.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
 checkBox.Position = UDim2.new(0, 20, 0, 50)
 checkBox.BackgroundColor3 = Color3.new(0, 0, 0)
 checkBox.BorderColor3 = Color3.fromRGB(255, 255, 255)
 checkBox.BorderSizePixel = 2
 checkBox.Text = ""
 
-local checkMark = Instance.new("TextLabel", checkBox)
-checkMark.Size = UDim2.new(1, 0, 1, 0)
-checkMark.BackgroundTransparency = 1
-checkMark.Text = ""
-checkMark.TextColor3 = Color3.new(1, 1, 1)
-checkMark.TextScaled = true
-
 local function updateCheckBox()
     if isRunning then
-        checkMark.Text = "✓"
+        checkBox.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple background
     else
-        checkMark.Text = ""
+        checkBox.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background
     end
 end
 
@@ -209,3 +203,44 @@ local function runTeleportLoop()
 end
 
 spawn(runTeleportLoop)
+
+-- Tabs
+local tabFrame = Instance.new("Frame", frame)
+tabFrame.Size = UDim2.new(1, 0, 0, 50)
+tabFrame.Position = UDim2.new(0, 0, 0, 0)
+tabFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+tabFrame.BorderSizePixel = 0
+
+local tab1Button = Instance.new("TextButton", tabFrame)
+tab1Button.Size = UDim2.new(0, 100, 1, 0)
+tab1Button.Position = UDim2.new(0, 0, 0, 0)
+tab1Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+tab1Button.Text = "Tab 1"
+
+local tab2Button = Instance.new("TextButton", tabFrame)
+tab2Button.Size = UDim2.new(0, 100, 1, 0)
+tab2Button.Position = UDim2.new(0, 100, 0, 0)
+tab2Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+tab2Button.Text = "Tab 2"
+
+local tabContent1 = Instance.new("Frame", frame)
+tabContent1.Size = UDim2.new(1, 0, 1, -50)
+tabContent1.Position = UDim2.new(0, 0, 0, 50)
+tabContent1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+tabContent1.Visible = true
+
+local tabContent2 = Instance.new("Frame", frame)
+tabContent2.Size = UDim2.new(1, 0, 1, -50)
+tabContent2.Position = UDim2.new(0, 0, 0, 50)
+tabContent2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+tabContent2.Visible = false
+
+tab1Button.MouseButton1Click:Connect(function()
+    tabContent1.Visible = true
+    tabContent2.Visible = false
+end)
+
+tab2Button.MouseButton1Click:Connect(function()
+    tabContent1.Visible = false
+    tabContent2.Visible = true
+end)
