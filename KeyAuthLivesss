@@ -89,122 +89,49 @@ screenGui.ResetOnSpawn = false
 local frame = Instance.new("Frame", screenGui)
 frame.Size = UDim2.new(0, 600, 0, 400)
 frame.Position = UDim2.new(0.5, -300, 0.5, -200)
-frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-frame.BorderSizePixel = 0
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+frame.BorderColor3 = Color3.fromRGB(255, 0, 255)
+frame.BorderSizePixel = 2
 frame.Active = true
 frame.Draggable = true
 
--- Title text
-local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1, 0, 0, 30)
-title.Position = UDim2.new(0, 0, 0, 0)
-title.BackgroundTransparency = 1
-title.Text = "KeyAuth - Beta"
-title.TextColor3 = Color3.new(1, 1, 1)
-title.TextScaled = true
+-- Beta text at the bottom
+local betaText = Instance.new("TextLabel", frame)
+betaText.Size = UDim2.new(0, 60, 0, 20)
+betaText.Position = UDim2.new(0, 10, 1, -30)
+betaText.BackgroundTransparency = 1
+betaText.Text = "Beta"
+betaText.TextColor3 = Color3.fromRGB(255, 0, 255)
+betaText.TextScaled = true
+betaText.Font = Enum.Font.Fantasy
 
--- Minimize button
-local minimizeButton = Instance.new("TextButton", frame)
-minimizeButton.Size = UDim2.new(0, 30, 0, 30)
-minimizeButton.Position = UDim2.new(1, -30, 0, 0)
-minimizeButton.BackgroundColor3 = Color3.new(1, 0, 1)
-minimizeButton.Text = "-"
-minimizeButton.TextColor3 = Color3.new(1, 1, 1)
-minimizeButton.TextScaled = true
+-- Checkbox
+local checkBox = Instance.new("TextButton", frame)
+checkBox.Size = UDim2.new(0, 40, 0, 40)
+checkBox.Position = UDim2.new(0, 20, 0, 50)
+checkBox.BackgroundColor3 = Color3.new(0, 0, 0)
+checkBox.BorderColor3 = Color3.fromRGB(255, 0, 255)
+checkBox.BorderSizePixel = 2
+checkBox.Text = ""
 
--- Tabs
-local tabs = {"ESP", "Aiming", "Misc", "Configs"}
-local tabButtons = {}
-local activeTab = "ESP"
+local checkMark = Instance.new("TextLabel", checkBox)
+checkMark.Size = UDim2.new(1, 0, 1, 0)
+checkMark.BackgroundTransparency = 1
+checkMark.Text = ""
+checkMark.TextColor3 = Color3.new(1, 1, 1)
+checkMark.TextScaled = true
 
-local tabFrame = Instance.new("Frame", frame)
-tabFrame.Size = UDim2.new(1, 0, 0, 30)
-tabFrame.Position = UDim2.new(0, 0, 0, 30)
-tabFrame.BackgroundTransparency = 1
-
-for i, tabName in ipairs(tabs) do
-    local tabButton = Instance.new("TextButton", tabFrame)
-    tabButton.Size = UDim2.new(0, 100, 1, 0)
-    tabButton.Position = UDim2.new(0, (i-1) * 100, 0, 0)
-    tabButton.BackgroundColor3 = Color3.new(0, 0, 0)
-    tabButton.BorderColor3 = Color3.new(0.5, 0.5, 0.5)
-    tabButton.Text = tabName
-    tabButton.TextColor3 = Color3.new(1, 1, 1)
-    tabButton.TextScaled = true
-    tabButtons[tabName] = tabButton
-end
-
--- Tab contents
-local contentFrames = {}
-
-for _, tabName in ipairs(tabs) do
-    local contentFrame = Instance.new("Frame", frame)
-    contentFrame.Size = UDim2.new(1, 0, 1, -60)
-    contentFrame.Position = UDim2.new(0, 0, 0, 60)
-    contentFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    contentFrame.Visible = (tabName == activeTab)
-    contentFrames[tabName] = contentFrame
-end
-
--- ESP Tab content
-local espFrame = contentFrames["ESP"]
-
--- Enemy Flags Section
-local enemyFlagsLabel = Instance.new("TextLabel", espFrame)
-enemyFlagsLabel.Size = UDim2.new(0, 200, 0, 30)
-enemyFlagsLabel.Position = UDim2.new(0, 10, 0, 10)
-enemyFlagsLabel.BackgroundTransparency = 1
-enemyFlagsLabel.Text = "Enemy Flags"
-enemyFlagsLabel.TextColor3 = Color3.new(1, 1, 1)
-enemyFlagsLabel.TextScaled = true
-enemyFlagsLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-local function createCheckbox(parent, label, posX, posY)
-    local checkbox = Instance.new("TextButton", parent)
-    checkbox.Size = UDim2.new(0, 20, 0, 20)
-    checkbox.Position = UDim2.new(0, posX, 0, posY)
-    checkbox.BackgroundColor3 = Color3.new(0, 0, 0)
-    checkbox.BorderColor3 = Color3.new(1, 0, 1)
-    checkbox.BorderSizePixel = 2
-    checkbox.Text = ""
-    
-    local checkMark = Instance.new("TextLabel", checkbox)
-    checkMark.Size = UDim2.new(1, 0, 1, 0)
-    checkMark.BackgroundTransparency = 1
-    checkMark.Text = ""
-    checkMark.TextColor3 = Color3.new(1, 1, 1)
-    checkMark.TextScaled = true
-    
-    local label = Instance.new("TextLabel", parent)
-    label.Size = UDim2.new(0, 150, 0, 20)
-    label.Position = UDim2.new(0, posX + 30, 0, posY)
-    label.BackgroundTransparency = 1
-    label.Text = label
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.TextScaled = true
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    
-    return checkbox, checkMark
-end
-
-local silentAimCheckbox, silentAimCheckMark = createCheckbox(espFrame, "Silent Aim", 10, 50)
-
-local function updateCheckBox(checkbox, checkMark, state)
-    if state then
+local function updateCheckBox()
+    if isRunning then
         checkMark.Text = "✓"
     else
         checkMark.Text = ""
     end
 end
 
-silentAimCheckbox.MouseButton1Click:Connect(function()
+checkBox.MouseButton1Click:Connect(function()
     isRunning = not isRunning
-    updateCheckBox(silentAimCheckbox, silentAimCheckMark, isRunning)
-end)
-
-minimizeButton.MouseButton1Click:Connect(function()
-    isUIVisible = not isUIVisible
-    frame.Visible = isUIVisible
+    updateCheckBox()
 end)
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
@@ -214,15 +141,6 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         frame.Visible = isUIVisible
     end
 end)
-
-for tabName, tabButton in pairs(tabButtons) do
-    tabButton.MouseButton1Click:Connect(function()
-        activeTab = tabName
-        for tName, contentFrame in pairs(contentFrames) do
-            contentFrame.Visible = (tName == activeTab)
-        end
-    end)
-end
 
 local function performEKeyAction()
     print("performEKeyAction called")
