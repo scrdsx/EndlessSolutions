@@ -79,6 +79,7 @@ local player = game.Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
 
 local isRunning = false
+local isUIVisible = true
 
 -- Create the UI elements
 local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
@@ -86,24 +87,54 @@ screenGui.Name = "TeleportGui"
 screenGui.ResetOnSpawn = false
 
 local frame = Instance.new("Frame", screenGui)
-frame.Size = UDim2.new(0, 200, 0, 100)
-frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+frame.Size = UDim2.new(0, 300, 0, 150)
+frame.Position = UDim2.new(0.5, -150, 0.5, -75)
 frame.BackgroundColor3 = Color3.new(0, 0, 0)
 frame.BorderSizePixel = 0
 frame.Active = true
 frame.Draggable = true
 
+-- Title text
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, -40, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "KeyAuth"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.TextScaled = true
+
+-- Version text
+local version = Instance.new("TextLabel", frame)
+version.Size = UDim2.new(1, 0, 0, 30)
+version.Position = UDim2.new(0, 0, 1, -30)
+version.BackgroundTransparency = 1
+version.Text = "Beta"
+version.TextColor3 = Color3.new(1, 1, 1)
+version.TextScaled = true
+
+-- Minimize button
+local minimizeButton = Instance.new("TextButton", frame)
+minimizeButton.Size = UDim2.new(0, 30, 0, 30)
+minimizeButton.Position = UDim2.new(1, -30, 0, 0)
+minimizeButton.BackgroundColor3 = Color3.new(1, 0, 1)
+minimizeButton.Text = "-"
+minimizeButton.TextColor3 = Color3.new(1, 1, 1)
+minimizeButton.TextScaled = true
+
+-- Checkbox
 local checkBox = Instance.new("TextButton", frame)
-checkBox.Size = UDim2.new(0, 20, 0, 20)
-checkBox.Position = UDim2.new(0, 10, 0, 10)
-checkBox.BackgroundColor3 = Color3.new(1, 1, 1)
+checkBox.Size = UDim2.new(0, 40, 0, 40)
+checkBox.Position = UDim2.new(0, 20, 0, 70)
+checkBox.BackgroundColor3 = Color3.new(0, 0, 0)
+checkBox.BorderColor3 = Color3.new(1, 0, 1)
+checkBox.BorderSizePixel = 2
 checkBox.Text = ""
 
 local checkMark = Instance.new("TextLabel", checkBox)
 checkMark.Size = UDim2.new(1, 0, 1, 0)
 checkMark.BackgroundTransparency = 1
 checkMark.Text = ""
-checkMark.TextColor3 = Color3.new(0, 1, 0)
+checkMark.TextColor3 = Color3.new(1, 1, 1) -- White color for the check mark
 checkMark.TextScaled = true
 
 local function updateCheckBox()
@@ -117,6 +148,19 @@ end
 checkBox.MouseButton1Click:Connect(function()
     isRunning = not isRunning
     updateCheckBox()
+end)
+
+minimizeButton.MouseButton1Click:Connect(function()
+    isUIVisible = not isUIVisible
+    frame.Visible = isUIVisible
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.RightShift then
+        isUIVisible = not isUIVisible
+        frame.Visible = isUIVisible
+    end
 end)
 
 local function performEKeyAction()
