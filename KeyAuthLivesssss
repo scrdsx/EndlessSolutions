@@ -90,7 +90,7 @@ local frame = Instance.new("Frame", screenGui)
 frame.Size = UDim2.new(0, 600, 0, 400)
 frame.Position = UDim2.new(0.5, -300, 0.5, -200)
 frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-frame.BorderColor3 = Color3.fromRGB(255, 0, 255)
+frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
 frame.BorderSizePixel = 2
 frame.Active = true
 frame.Draggable = true
@@ -101,7 +101,7 @@ betaText.Size = UDim2.new(0, 60, 0, 20)
 betaText.Position = UDim2.new(0, 10, 1, -30)
 betaText.BackgroundTransparency = 1
 betaText.Text = "Beta"
-betaText.TextColor3 = Color3.fromRGB(255, 0, 255)
+betaText.TextColor3 = Color3.fromRGB(255, 255, 255)
 betaText.TextScaled = true
 betaText.Font = Enum.Font.Fantasy
 
@@ -110,7 +110,7 @@ local checkBox = Instance.new("TextButton", frame)
 checkBox.Size = UDim2.new(0, 40, 0, 40)
 checkBox.Position = UDim2.new(0, 20, 0, 50)
 checkBox.BackgroundColor3 = Color3.new(0, 0, 0)
-checkBox.BorderColor3 = Color3.fromRGB(255, 0, 255)
+checkBox.BorderColor3 = Color3.fromRGB(255, 255, 255)
 checkBox.BorderSizePixel = 2
 checkBox.Text = ""
 
