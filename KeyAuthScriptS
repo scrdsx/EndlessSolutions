@@ -76,10 +76,48 @@ StarterGui:SetCore("SendNotification", {
 --* Your code here *--
 
 local player = game.Players.LocalPlayer
-
 local UserInputService = game:GetService("UserInputService")
 
 local isRunning = false
+
+-- Create the UI elements
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.Name = "TeleportGui"
+screenGui.ResetOnSpawn = false
+
+local frame = Instance.new("Frame", screenGui)
+frame.Size = UDim2.new(0, 200, 0, 100)
+frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+
+local checkBox = Instance.new("TextButton", frame)
+checkBox.Size = UDim2.new(0, 20, 0, 20)
+checkBox.Position = UDim2.new(0, 10, 0, 10)
+checkBox.BackgroundColor3 = Color3.new(1, 1, 1)
+checkBox.Text = ""
+
+local checkMark = Instance.new("TextLabel", checkBox)
+checkMark.Size = UDim2.new(1, 0, 1, 0)
+checkMark.BackgroundTransparency = 1
+checkMark.Text = ""
+checkMark.TextColor3 = Color3.new(0, 1, 0)
+checkMark.TextScaled = true
+
+local function updateCheckBox()
+    if isRunning then
+        checkMark.Text = "✓"
+    else
+        checkMark.Text = ""
+    end
+end
+
+checkBox.MouseButton1Click:Connect(function()
+    isRunning = not isRunning
+    updateCheckBox()
+end)
 
 local function performEKeyAction()
     -- SomeFunctionTriggeredByE()
@@ -92,7 +130,6 @@ local function teleportToJobRig()
         local targetPart = jobRigModel.PrimaryPart or jobRigModel:FindFirstChild("HumanoidRootPart") or jobRigModel:FindFirstChildWhichIsA("BasePart")
         
         if targetPart then
-            -- Get the player's character
             local character = player.Character
             
             if character then
@@ -113,15 +150,15 @@ local function teleportToJobRig()
                     
                     for _, pos in ipairs(deliveryPositions) do
                         humanoidRootPart.CFrame = pos.CFrame
-                        wait(0.5) -- Optionally wait a bit between teleportations
+                        wait(0.5)
                     end
                     
                     local startTime = tick()
-                    local duration = 4  -- Duration to simulate 'E' key hold
+                    local duration = 4
                     
                     while tick() - startTime < duration do
                         performEKeyAction()
-                        wait(0.5) -- Optionally adjust this interval
+                        wait(0.5)
                     end
                 else
                     warn("HumanoidRootPart not found in character.")
@@ -137,20 +174,13 @@ local function teleportToJobRig()
     end
 end
 
-local function toggleRunning()
-    isRunning = not isRunning
+local function runTeleportLoop()
+    while true do
+        if isRunning then
+            teleportToJobRig()
+        end
+        wait(2)
+    end
 end
 
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-    if input.KeyCode == Enum.KeyCode.B then
-        toggleRunning()
-    end
-end)
-
-while true do
-    if isRunning then
-        teleportToJobRig()
-    end
-    wait(2)
-end
+spawn(runTeleportLoop)
