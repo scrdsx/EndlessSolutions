@@ -5,9 +5,9 @@ local StarterGui = game:GetService("StarterGui")
 local LuaName = "KeyAuth"
 
 StarterGui:SetCore("SendNotification", {
-	Title = LuaName,
-	Text = "Intializing Authentication...",
-	Duration = 5
+    Title = LuaName,
+    Text = "Intializing Authentication...",
+    Duration = 5
 })
 
 --* Configuration *--
@@ -15,9 +15,9 @@ local initialized = false
 local sessionid = ""
 
 --* Application Details *--
-Name = "hyperion" --* Application Name
-Ownerid = "pIZcfcgqTd" --* OwnerID
-APPVersion = "1.0"     --* Application Version
+local Name = "hyperion" --* Application Name
+local Ownerid = "pIZcfcgqTd" --* OwnerID
+local APPVersion = "1.0"     --* Application Version
 
 local req = game:HttpGet('https://keyauth.win/api/1.1/?name=' .. Name .. '&ownerid=' .. Ownerid .. '&type=init&ver=' .. APPVersion)
 
@@ -80,21 +80,6 @@ local UserInputService = game:GetService("UserInputService")
 
 local isRunning = false
 
--- Function to update the checkbox (no longer used)
--- local function updateCheckBox()
---     if isRunning then
---         checkBox.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple background
---     else
---         checkBox.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background
---     end
--- end
-
--- Checkbox click handler (no longer used)
--- checkBox.MouseButton1Click:Connect(function()
---     isRunning = not isRunning
---     updateCheckBox()
--- end)
-
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
     if input.KeyCode == Enum.KeyCode.RightShift then
@@ -104,7 +89,7 @@ end)
 
 local function performEKeyAction()
     print("performEKeyAction called")
-    -- SomeFunctionTriggeredByE() -- Ensure this function is defined or implement its functionality here.
+    -- Implement your action for 'E' key here
 end
 
 local function teleportToJobRig()
@@ -139,7 +124,7 @@ local function teleportToJobRig()
                     end
                     
                     local startTime = tick()
-                    let duration = 4
+                    local duration = 4 -- Changed 'let' to 'local'
                     
                     while tick() - startTime < duration do
                         performEKeyAction()
