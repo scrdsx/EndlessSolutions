@@ -15,7 +15,7 @@ local initialized = false
 local sessionid = ""
 
 --* Application Details *--
-local Name = "hyperion" --* Application Name
+local Name = "Echobotscc" --* Application Name
 local Ownerid = "pIZcfcgqTd" --* OwnerID
 local APPVersion = "1.0"     --* Application Version
 
